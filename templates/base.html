@@ -32,9 +32,22 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Profile</span></a>
+                    <a class="nav-link"><i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Profile</span></a>
                 </li>
+                {% else %}
+                <li class="nav-item-dropdown"> 
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-Join" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Join
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-success" aria-labelledby="navbarDropdownMenuLink-Join">
+                        <a class="dropdown-item" href="{% url 'account:customer_register' %}">Customer</a>
+                        <a class="dropdown-item" href="{% url 'account:business_register' %}">Pro</a>
+                    </div>
+                </li>
+               
+                {% endif %}
             </ul>
         </div>
     </nav>

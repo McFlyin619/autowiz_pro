@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+{% comment %} <div class="container"> {% endcomment %}
+<!-- Jumbotron -->
+<div class="card card-image" style="background-image: url({% static 'img/old_car_pro.jpg' %});">
+    <div class="text-white rgba-stylish-strong py-5 px-4">
+        <div class="py-5">
+        {% if registered %}
+            <h1 class="h1 green-text text-center"><i class="fas fa-user"></i> Thanks for registering!</h1>
+        {% else %}
+            <!-- Content -->
+            <h1 class="h1 green-text text-center"><i class="fas fa-user"></i> Pro Registration</h1>
+            <h6 class="card-title h6 my-4 py-2 text-center">Sign up to start recieving more leads!</h6>\
+            <div class="container">
+            <p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class='col-md'>
+                            {% bootstrap_form user_form %}
+                        </div>
+                        <div class='col-md'>
+                            {% bootstrap_form business_form %}
+                        </div>
+                    </div>
+                    
+                    <input class="btn btn-outline-success" type="submit" value="Save">
+                </form>
+            </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Jumbotron -->
+
+
+
+{% endblock %}
