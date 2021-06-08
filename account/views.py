@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from .forms import NewUserForm, CustomerForm, BusinessForm
+from django.http import request, HttpResponse, HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 def customer_register(request):
@@ -73,3 +77,30 @@ def business_register(request):
     } 
 
     return render(request,'account/business_register.html',context=context) 
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username,password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('home'))
+
+            else: 
+                return HttpResponse('Account is not active!')
+        
+        else:
+            print('someone tried to login unsuccessfully!')
+            return HttpResponse('Username or Password does not match our records. Please try again.')
+
+    else:
+        return render(request, 'account/user_login.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
